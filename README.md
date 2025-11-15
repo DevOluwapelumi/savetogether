@@ -7,7 +7,7 @@ A beautiful, modern web application for managing community savings groups with t
 
 ## 🌟 Features
 
-### Core Functionality
+### Core Functionality:
 - **Student/Member Registration**: Users can register with their name and choose from three savings tiers
 - **Tier-Based Savings**: Three tiers with different contribution amounts and interest rates:
   - Tier 1: ₦10,000 (5% weekly interest)
@@ -19,7 +19,7 @@ A beautiful, modern web application for managing community savings groups with t
 - **Input Validation**: Ensures correct tier amounts are entered and validates all user inputs
 - **Data Persistence**: Uses localStorage to save all data between sessions
 
-### User Experience
+### User Experience:
 - **Modern UI**: Clean, professional design with emerald/teal color scheme
 - **Smooth Animations**: All elements feature smooth transitions and animations
 - **Responsive Design**: Fully responsive layout that works on mobile, tablet, and desktop
@@ -29,10 +29,10 @@ A beautiful, modern web application for managing community savings groups with t
 
 ## 🚀 Getting Started
 
-### Prerequisites
+### Prerequisites:
 - Node.js 16+ and npm installed ([install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating))
 
-### Installation
+### Installation:
 
 1. Clone the repository:
 ```bash
@@ -54,7 +54,7 @@ npm run dev
 
 ## 📖 How to Use
 
-### For New Users
+### For New Users:
 
 1. **Join the Group**
    - Enter your full name in the registration form
