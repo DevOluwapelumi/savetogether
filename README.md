@@ -187,4 +187,4 @@ For questions or issues:
 
 ---
 
-**Built with ❤️ using React, TypeScript, and Tailwind CSS**
+**Built with ❤️ using React, TypeScript, and Tailwind CSS...**
