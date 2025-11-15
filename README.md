@@ -1,4 +1,4 @@
-# SaveTogether - A Community Savings Group Web Application
+# SaveTogether - A Community Savings Group Web Application.
 
 A beautiful, modern web application for managing community savings groups with tier-based contributions and weekly interest calculations.
 
