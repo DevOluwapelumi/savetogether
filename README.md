@@ -83,7 +83,7 @@ npm run dev
    - You'll receive your contribution plus all accumulated interest
    - Your spot opens up for a new member to join
 
-### Understanding the Tiers
+### Understanding the Tiers:
 
 | Tier | Contribution | Interest Rate | Week 1 Interest | Week 1 Total |
 |------|-------------|---------------|-----------------|--------------|
