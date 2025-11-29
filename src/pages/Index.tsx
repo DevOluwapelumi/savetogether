@@ -17,20 +17,39 @@ import {
 
 const Index = () => {
   const [members, setMembers] = useState<Member[]>([]);
-  const [currentWeek, setCurrentWeek] = useState(1);
+  const [currentWeek, setCurrentWeek] = useState(0);
 
   // Load data from localStorage
-  useEffect(() => {
-    const savedMembers = localStorage.getItem("savingsMembers");
-    const savedWeek = localStorage.getItem("currentWeek");
-    
-    if (savedMembers) {
-      setMembers(JSON.parse(savedMembers));
+ useEffect(() => {
+  const savedMembers = localStorage.getItem("savingsMembers");
+  const savedWeek = localStorage.getItem("currentWeek");
+
+  if (savedMembers) {
+    const parsedMembers: Member[] = JSON.parse(savedMembers);
+    setMembers(parsedMembers);
+
+    // If no members, enforce week 0 and exit early
+    if (parsedMembers.length === 0) {
+      setCurrentWeek(0);
+      return;
     }
+
+    // If members exist, restore saved week if present
     if (savedWeek) {
       setCurrentWeek(parseInt(savedWeek));
+    } else {
+      setCurrentWeek(1); // fallback just in case
     }
-  }, []);
+
+    return;
+  }
+
+  // If no saved members at all, enforce week 0
+  setCurrentWeek(0);
+}, []);
+
+
+  
 
   // Save data to localStorage
   useEffect(() => {
@@ -39,20 +58,36 @@ const Index = () => {
   }, [members, currentWeek]);
 
   const handleRegister = (newMember: Member) => {
-    setMembers([...members, newMember]);
-  };
+  const updated = [...members, newMember];
+  setMembers(updated);
 
-  const handleWithdraw = (memberId: string) => {
-    const member = members.find((m) => m.id === memberId);
-    if (!member) return;
+  if (currentWeek === 0) {
+    setCurrentWeek(1);
+  }
+};
 
-    const totalWithdrawal = member.totalContribution + member.accumulatedInterest;
-    
-    setMembers(members.filter((m) => m.id !== memberId));
-    toast.success(
-      `${member.name} withdrew ₦${totalWithdrawal.toLocaleString()}. A new member can now join!`
-    );
-  };
+const handleWithdraw = (memberId: string) => {
+  const member = members.find((m) => m.id === memberId);
+  if (!member) return;
+
+  const totalWithdrawal = member.totalContribution + member.accumulatedInterest;
+
+  // Create the updated members list
+  const updatedMembers = members.filter((m) => m.id !== memberId);
+
+  // If this was the last member → reset week to 0
+  if (updatedMembers.length === 0) {
+    setCurrentWeek(0);
+  }
+
+  // Save updated members
+  setMembers(updatedMembers);
+
+  toast.success(
+    `${member.name} withdrew ₦${totalWithdrawal.toLocaleString()}. A new member can now join!`
+  );
+};
+
 
   const handleAdvanceWeek = () => {
     const updatedMembers = members.map((member) => {
