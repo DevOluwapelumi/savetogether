@@ -20,36 +20,36 @@ const Index = () => {
   const [currentWeek, setCurrentWeek] = useState(0);
 
   // Load data from localStorage
- useEffect(() => {
-  const savedMembers = localStorage.getItem("savingsMembers");
-  const savedWeek = localStorage.getItem("currentWeek");
+  useEffect(() => {
+    const savedMembers = localStorage.getItem("savingsMembers");
+    const savedWeek = localStorage.getItem("currentWeek");
 
-  if (savedMembers) {
-    const parsedMembers: Member[] = JSON.parse(savedMembers);
-    setMembers(parsedMembers);
+    if (savedMembers) {
+      const parsedMembers: Member[] = JSON.parse(savedMembers);
+      setMembers(parsedMembers);
 
-    // If no members, enforce week 0 and exit early
-    if (parsedMembers.length === 0) {
-      setCurrentWeek(0);
+      // If no members, enforce week 0 and exit early
+      if (parsedMembers.length === 0) {
+        setCurrentWeek(0);
+        return;
+      }
+
+      // If members exist, restore saved week if present
+      if (savedWeek) {
+        setCurrentWeek(parseInt(savedWeek));
+      } else {
+        setCurrentWeek(1); // fallback just in case
+      }
+
       return;
     }
 
-    // If members exist, restore saved week if present
-    if (savedWeek) {
-      setCurrentWeek(parseInt(savedWeek));
-    } else {
-      setCurrentWeek(1); // fallback just in case
-    }
-
-    return;
-  }
-
-  // If no saved members at all, enforce week 0
-  setCurrentWeek(0);
-}, []);
+    // If no saved members at all, enforce week 0
+    setCurrentWeek(0);
+  }, []);
 
 
-  
+
 
   // Save data to localStorage
   useEffect(() => {
@@ -58,35 +58,35 @@ const Index = () => {
   }, [members, currentWeek]);
 
   const handleRegister = (newMember: Member) => {
-  const updated = [...members, newMember];
-  setMembers(updated);
+    const updated = [...members, newMember];
+    setMembers(updated);
 
-  if (currentWeek === 0) {
-    setCurrentWeek(1);
-  }
-};
+    if (currentWeek === 0) {
+      setCurrentWeek(1);
+    }
+  };
 
-const handleWithdraw = (memberId: string) => {
-  const member = members.find((m) => m.id === memberId);
-  if (!member) return;
+  const handleWithdraw = (memberId: string) => {
+    const member = members.find((m) => m.id === memberId);
+    if (!member) return;
 
-  const totalWithdrawal = member.totalContribution + member.accumulatedInterest;
+    const totalWithdrawal = member.totalContribution + member.accumulatedInterest;
 
-  // Create the updated members list
-  const updatedMembers = members.filter((m) => m.id !== memberId);
+    // Create the updated members list
+    const updatedMembers = members.filter((m) => m.id !== memberId);
 
-  // If this was the last member → reset week to 0
-  if (updatedMembers.length === 0) {
-    setCurrentWeek(0);
-  }
+    // If this was the last member → reset week to 0
+    if (updatedMembers.length === 0) {
+      setCurrentWeek(0);
+    }
 
-  // Save updated members
-  setMembers(updatedMembers);
+    // Save updated members
+    setMembers(updatedMembers);
 
-  toast.success(
-    `${member.name} withdrew ₦${totalWithdrawal.toLocaleString()}. A new member can now join!`
-  );
-};
+    toast.success(
+      `${member.name} withdrew ₦${totalWithdrawal.toLocaleString()}. A new member can now join!`
+    );
+  };
 
 
   const handleAdvanceWeek = () => {
